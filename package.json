@@ -1,0 +1,63 @@
+{
+  "name": "hopabot",
+  "author": "Frys",
+  "version": "2.0.0",
+  "private": true,
+  "license": "LICENSE.txt",
+  "engines": {
+    "node": ">=16.0.0 <19.0.0"
+  },
+  "scripts": {
+    "boot": "npm i -g yarn@latest && yarn install --check-files --prod && npm run build && npm run schema:sync && npm run pm2",
+    "pm2": "npm i -g pm2@latest && pm2 update && pm2 start ecosystem.config.js -i 4 && pm2 startup && pm2 save",
+    "build": "nest build -p tsconfig.build.json",
+    "dev": "cross-env NODE_ENV=dev NODE_OPTIONS=--trace-warnings nest start --watch --debug 9229 --preserveWatchOutput -p tsconfig.dev.json",
+    "start": "cross-env NODE_ENV=production node ./dist/main.js",
+    "lint": "eslint \"./src/**/*.ts\" --fix",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "schema:sync": "yarn run typeorm -d ./dist/ormconfig.js schema:sync",
+    "schema:drop": "yarn run typeorm -d ./dist/ormconfig.js schema:drop"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^8.3.0",
+    "@fastify/csrf-protection": "^6.3.0",
+    "@fastify/helmet": "^10.1.1",
+    "@fastify/static": "^6.10.2",
+    "@nestjs/cli": "^9.0.0",
+    "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.3.2",
+    "@nestjs/core": "^9.0.0",
+    "@nestjs/typeorm": "^9.0.1",
+    "cross-env": "^7.0.3",
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.1.4",
+    "env-var": "^7.3.1",
+    "fastify": "4.17.0",
+    "mysql2": "^3.3.0",
+    "necord": "^5.8.4",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1",
+    "ts-node": "^10.0.0",
+    "tsconfig-paths": "4.1.1",
+    "typeorm": "^0.3.16",
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@nestjs/mapped-types": "^1.2.2",
+    "@nestjs/platform-fastify": "^9.4.2",
+    "@nestjs/schematics": "^9.0.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/jest": "^29.5.2",
+    "@types/node": "18.11.18",
+    "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.1",
+    "jest": "^29.5.0",
+    "source-map-support": "^0.5.20",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.0",
+    "ts-loader": "^9.2.3",
+    "webpack": "^5.0.0"
+  }
+}
