@@ -1,17 +1,26 @@
 import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./core/app.module";
+import { AppModule } from "./app.module";
 import { ConfigService, ConfigType } from "@nestjs/config";
-import { AppConfig } from "./core/app.config";
+import { AppConfig } from "./app.config";
 import { FastifyAdapter, NestFastifyApplication } from "@nestjs/platform-fastify";
 import { resolve } from "node:path";
-import appRegistrations from "./common/appRegistrations";
+import appRegistrations from "~/app.registrations";
+import { AppLogger } from "./app.logger";
 
 void async function() {
+  if (resolve(process.cwd()) !== resolve(__dirname, '../')) return process.stderr.write('Working directory of Node.JS process is not matches to the directory of this project');
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
-    { bufferLogs: false },
+    {
+      bufferLogs: true,
+    },
   );
+
+  const logger = app.get(AppLogger);
+  app.useLogger(logger);
+  app.flushLogs();
 
   const configService: ConfigService<ConfigType<typeof AppConfig>, true> = app.get(ConfigService);
   const config = configService.get('app', { infer: true });
@@ -25,8 +34,9 @@ void async function() {
     });
   }
 
-  app.enableShutdownHooks();
   app.setGlobalPrefix(config.address.pathname);
 
-  app.listen(config.port);
+  await app.listen(config.port);
+
+  app.enableShutdownHooks();
 }();

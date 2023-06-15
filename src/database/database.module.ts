@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule, ConfigService, ConfigType } from "@nestjs/config";
+import { ConfigModule } from "@nestjs/config";
+import { ConfigService, ConfigType } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DatabaseConfig } from "./database.config";
 

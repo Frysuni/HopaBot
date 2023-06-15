@@ -2,8 +2,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService, ConfigType } from "@nestjs/config";
 import { Client, Events, TextBasedChannel } from "discord.js";
 import { Context, ContextOf, Once } from "necord";
-import { getGuildChannel } from "~/common/clientManager";
-import * as packageJson from '../../../package.json';
+import { getGuildChannel } from "@common/clientManager";
 import { DiscordConfig } from "./discord.config";
 
 @Injectable()
@@ -11,7 +10,7 @@ export class DiscordService {
   private readonly logger = new Logger(DiscordService.name);
   private readonly config = this.configService.get('discord', { infer: true });
 
-  public clientReady: Promise<Client<true>>;
+  private clientReady: Promise<Client<true>>;
 
   constructor(
     private readonly client: Client,
@@ -40,7 +39,7 @@ export class DiscordService {
     resolve(this.client);
 
     this.logger.log(`Bot started as ${this.client.user!.username}`);
-    this.logToDiscord(`Бот запущен. v${packageJson.version}`);
+    this.logToDiscord(`Бот запущен. v${require('../../package.json').version}`);
   }
 
   @Once(Events.GuildCreate)

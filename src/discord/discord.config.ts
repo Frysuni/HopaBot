@@ -5,7 +5,7 @@ export const DiscordConfig = () => {
 
   return {
     discord: {
-      token: env.get('DISCORD_TOKEN').required().asString(),
+      token: env.get('DISCORD_BOT_TOKEN').required().asString(),
       logChannelId: env.get('DISCORD_LOG-CHANNEL-ID').required().asString(),
     },
   };

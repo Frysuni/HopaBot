@@ -1,16 +1,12 @@
 # any
-/test*.ts
-.data
-.chartData
-.adminChatId
+test*.ts
 .env
+updates.json
 
 # project output
 /assets
 /logs
 /.secrets
-/plainPasswords
-/discordUsers
 
 # Logs
 /logs

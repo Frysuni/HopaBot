@@ -4,7 +4,7 @@ import { snakeCase } from 'typeorm/util/StringUtils';
 
 export class NamingStrategy extends DefaultNamingStrategy implements NamingStrategyInterface {
   public override tableName(className: string, customName: string): string {
-    return customName || `unicore_${snakeCase(className)}s`;
+    return customName || `${snakeCase(className).replace('-entity', '')}s`;
   }
 
   public override columnName(propertyName: string, customName: string, embeddedPrefixes: string[]): string {

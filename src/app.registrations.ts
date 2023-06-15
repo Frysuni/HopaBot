@@ -2,7 +2,7 @@ import { CookieSerializeOptions, fastifyCookie } from "@fastify/cookie";
 import fastifyCsrfProtection from "@fastify/csrf-protection";
 import fastifyHelmet from "@fastify/helmet";
 import { NestFastifyApplication } from "@nestjs/platform-fastify";
-import secrets from "./secrets";
+import secrets from "./common/secrets";
 
 export default function(appRegister: NestFastifyApplication['register'], apiAddress: URL) {
   const cookieSerializeOptions: CookieSerializeOptions = {
